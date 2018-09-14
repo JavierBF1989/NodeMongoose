@@ -18,11 +18,24 @@ connect.then(() => {
     .then((dish) => {
         console.log(dish);
 
-        return Dishes.find({});
+        return Dishes.findByIdAndUpdate(dish._id, {
+            $set: { description: 'Updated test'}
+        },{
+            new: true
+        });
     })
-    .then((dishes) => {
-        console.log(dishes);
+    .then((dish) => {
+        console.log(dish);
 
+        dish.comments.push({
+            rating: 5,
+            comment: 'I\'m getting a sinking feeling!',
+            author: 'Leonardo di Carpaccio'
+        });
+        return dish.save();
+    })
+    .then((dish) => {
+        console.log(dish);
         return Dishes.remove({});
     })
     .then(() => {
